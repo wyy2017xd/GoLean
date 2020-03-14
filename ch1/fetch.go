@@ -4,7 +4,7 @@ import (
 	"os"
 	"net/http"
 	"fmt"
-	//"io/ioutil"
+	"io/ioutil"
 )
 
 func main() {
@@ -14,10 +14,11 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch is %v\n", err)
 			os.Exit(0)
 		}
-		//_, err := ioutil.ReadAll(resp.Body)
-		//if err != nil {
-		//	fmt.Fprint(os.Stderr, "fecth reading %v\n", err)
-		//}
-		fmt.Println(resp.Header)
+		b, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Fprint(os.Stderr, "fecth reading %v\n", err)
+		}
+		fmt.Println(resp.Header, b)
+		resp.Body.Close()
 	}
 }
